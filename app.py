@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
-import joblib
 import pandas as pd
+import joblib
+
+from utils.feature_extraction import extract_features
 
 app = Flask(__name__)
 
@@ -14,12 +16,10 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
 
-    # Get values from form
-    features = []
+    url = request.form['url']
 
-    for i in range(1, 32):
-        value = request.form.get(f'feature{i}')
-        features.append(int(value))
+    # Extract features
+    features = extract_features(url)
 
     # Convert to dataframe
     input_data = pd.DataFrame([features])
@@ -27,13 +27,16 @@ def predict():
     # Prediction
     prediction = model.predict(input_data)
 
-    # Result
     if prediction[0] == 1:
         result = "Legitimate Website"
     else:
         result = "Phishing Website"
 
-    return render_template('result.html', prediction=result)
+    return render_template(
+        'result.html',
+        prediction=result,
+        url=url
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)

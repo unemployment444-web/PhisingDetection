@@ -1,15 +1,87 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Result</title>
+    <title>Detection Result</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .container{
+            background: white;
+            width: 60%;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        .safe{
+            color: green;
+            font-size: 30px;
+        }
+
+        .phishing{
+            color: red;
+            font-size: 30px;
+        }
+
+        .url{
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        a{
+            text-decoration: none;
+            color: blue;
+            font-weight: bold;
+        }
+
+    </style>
+
 </head>
 <body>
 
-    <h1>Detection Result</h1>
+    <div class="container">
 
-    <h2>{{ prediction }}</h2>
+        <h1>Detection Result</h1>
 
-    <a href="/">Check Another Website</a>
+        <p class="url">
+            <strong>URL:</strong> {{ url }}
+        </p>
+
+        {% if prediction == "Legitimate Website" %}
+
+            <h2 class="safe">
+                ✅ Legitimate Website
+            </h2>
+
+            <p>
+                This website appears safe based on AI analysis.
+            </p>
+
+        {% else %}
+
+            <h2 class="phishing">
+                ⚠️ Phishing Website Detected
+            </h2>
+
+            <p>
+                This URL contains suspicious phishing indicators.
+            </p>
+
+        {% endif %}
+
+        <br>
+
+        <a href="/">Check Another Website</a>
+
+    </div>
 
 </body>
 </html>
