@@ -8,7 +8,7 @@ import joblib
 data = pd.read_csv("phishing.csv")
 
 # Features and target
-X = data.drop("class", axis=1)
+X = data.drop(["class", "Index"], axis=1)
 y = data["class"]
 
 # Split dataset

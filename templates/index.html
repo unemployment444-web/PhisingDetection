@@ -2,23 +2,38 @@
 <html>
 <head>
     <title>Phishing Website Detector</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
 
-    <h1>AI-Based Phishing Website Detection</h1>
+<div class="container">
+
+    <h1>🛡️ Phishing Website Detector</h1>
+
+    <p>
+        Machine Learning Based URL Security Analysis
+    </p>
+
 
     <form action="/predict" method="POST">
 
-        <label>Enter Website URL:</label>
-        <br><br>
+        <input 
+        type="text" 
+        name="url"
+        placeholder="Enter website URL..."
+        required>
 
-        <input type="text" name="url" required size="50">
 
-        <br><br>
-
-        <button type="submit">Detect</button>
+        <button type="submit">
+            Check Website
+        </button>
 
     </form>
+
+
+</div>
+
 
 </body>
 </html>

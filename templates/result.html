@@ -1,87 +1,49 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
-    <title>Detection Result</title>
 
-    <style>
+<title>Detection Result</title>
 
-        body{
-            font-family: Arial;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding-top: 50px;
-        }
-
-        .container{
-            background: white;
-            width: 60%;
-            margin: auto;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px gray;
-        }
-
-        .safe{
-            color: green;
-            font-size: 30px;
-        }
-
-        .phishing{
-            color: red;
-            font-size: 30px;
-        }
-
-        .url{
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        a{
-            text-decoration: none;
-            color: blue;
-            font-weight: bold;
-        }
-
-    </style>
+<link rel="stylesheet" href="/static/style.css">
 
 </head>
+
+
 <body>
 
-    <div class="container">
 
-        <h1>Detection Result</h1>
+<div class="container result">
 
-        <p class="url">
-            <strong>URL:</strong> {{ url }}
-        </p>
 
-        {% if prediction == "Legitimate Website" %}
+<h1>Detection Result</h1>
 
-            <h2 class="safe">
-                ✅ Legitimate Website
-            </h2>
 
-            <p>
-                This website appears safe based on AI analysis.
-            </p>
+<h2>
+{{ prediction }}
+</h2>
 
-        {% else %}
 
-            <h2 class="phishing">
-                ⚠️ Phishing Website Detected
-            </h2>
+<p>
+URL:
+</p>
 
-            <p>
-                This URL contains suspicious phishing indicators.
-            </p>
+<div class="url">
+{{ url }}
+</div>
 
-        {% endif %}
 
-        <br>
+<a href="/">
+<button>
+Check Another URL
+</button>
+</a>
 
-        <a href="/">Check Another Website</a>
 
-    </div>
+</div>
+
 
 </body>
+
 </html>
