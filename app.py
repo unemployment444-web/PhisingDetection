@@ -4,9 +4,11 @@ import joblib
 
 from utils.feature_extraction import extract_features
 
+
 app = Flask(__name__)
 
-# Load trained model
+
+# Load trained ML model
 model = joblib.load("model.pkl")
 
 
@@ -45,46 +47,134 @@ feature_names = [
 ]
 
 
+
 @app.route('/')
 def home():
+
     return render_template('index.html')
+
 
 
 @app.route('/predict', methods=['POST'])
 def predict():
 
+
+    # Get URL from user
     url = request.form['url']
 
-    # Extract features
+
+    # Extract URL features
     features = extract_features(url)
 
-    # Convert to dataframe
+
+
+    # Convert features into dataframe
     input_data = pd.DataFrame(
         [features],
         columns=feature_names
     )
 
 
-    # ML Prediction
+
+    # ML prediction
     prediction = model.predict(input_data)
+
+
+    # Confidence score
+    confidence = round(
+        max(model.predict_proba(input_data)[0]) * 100,
+        2
+    )
+
 
 
     print("Features:", features)
     print("Prediction:", prediction)
 
 
-    # Extra phishing checks
+
+    # Detection reasons
+
+    reasons = []
+
+
     danger_words = [
         "login",
         "verify",
         "secure",
         "update",
         "bank",
-        "payment"
+        "payment",
+        "account"
     ]
 
 
-    if any(word in url.lower() for word in danger_words) or ".xyz" in url.lower():
+    bad_domains = [
+        ".xyz",
+        ".tk",
+        ".ml",
+        ".ga",
+        ".cf"
+    ]
+
+
+
+    if any(word in url.lower() for word in danger_words):
+
+        reasons.append(
+            "Suspicious keywords detected"
+        )
+
+
+
+    if any(domain in url.lower() for domain in bad_domains):
+
+        reasons.append(
+            "Suspicious domain extension"
+        )
+
+
+
+    if "-" in url:
+
+        reasons.append(
+            "Contains unusual hyphen pattern"
+        )
+
+
+
+    if not url.startswith("https"):
+
+        reasons.append(
+            "Website does not use HTTPS"
+        )
+
+
+
+    if len(url) > 75:
+
+        reasons.append(
+            "Very long URL"
+        )
+
+
+
+    if len(reasons) == 0:
+
+        reasons.append(
+            "No suspicious behaviour detected"
+        )
+
+
+
+
+    # Final result
+
+    if (
+        any(word in url.lower() for word in danger_words)
+        or
+        any(domain in url.lower() for domain in bad_domains)
+    ):
 
         result = "Phishing Website"
 
@@ -100,12 +190,18 @@ def predict():
 
 
 
+
     return render_template(
         'result.html',
         prediction=result,
-        url=url
+        url=url,
+        confidence=confidence,
+        reasons=reasons
     )
 
 
+
+
 if __name__ == '__main__':
+
     app.run(debug=True)
