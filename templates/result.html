@@ -33,28 +33,20 @@ safe
 </div>
 
 
-<h3>
-Confidence:
-{{confidence}}%
-</h3>
+<div class="confidence">
+Confidence: {{confidence}}%
+</div>
 
 
-<h3>
-Detection Reasons
-</h3>
-
+<div class="reasons">
+<h3>Detection Reasons</h3>
 
 <ul>
-
 {% for reason in reasons %}
-
-<li>
-{{reason}}
-</li>
-
+<li>{{reason}}</li>
 {% endfor %}
-
 </ul>
+</div>
 
 
 <a href="/">
