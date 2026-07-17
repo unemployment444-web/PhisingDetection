@@ -1,532 +1,418 @@
-/* ===========================
-   RESET
-=========================== */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
+/* ==========================================================================
+   RESET & BASE STYLES
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
 }
 
-body{
-
-    min-height:100vh;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    overflow:hidden;
-
-    background:linear-gradient(-45deg,#0f172a,#1e293b,#1e3a8a,#312e81);
-
-    background-size:400% 400%;
-
-    animation:bgMove 15s ease infinite;
-
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    background: linear-gradient(-45deg, #020617, #0f172a, #1e1b4b, #090d16);
+    background-size: 400% 400%;
+    animation: bgMove 18s ease infinite;
+    padding: 20px;
+    position: relative;
 }
 
-/* Animated Background */
-
-@keyframes bgMove{
-
-0%{background-position:0% 50%;}
-
-50%{background-position:100% 50%;}
-
-100%{background-position:0% 50%;}
-
+@keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-/* Floating Glow */
-
-body::before{
-
-content:"";
-
-position:absolute;
-
-width:350px;
-height:350px;
-
-background:#2563eb;
-
-border-radius:50%;
-
-filter:blur(130px);
-
-top:-120px;
-left:-100px;
-
-opacity:.35;
-
+/* Glowing background ambient elements */
+body::before, body::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.25;
+    z-index: 1;
+    pointer-events: none;
 }
 
-body::after{
-
-content:"";
-
-position:absolute;
-
-width:400px;
-height:400px;
-
-background:#7c3aed;
-
-border-radius:50%;
-
-filter:blur(150px);
-
-bottom:-150px;
-right:-120px;
-
-opacity:.35;
-
+body::before {
+    width: 400px;
+    height: 400px;
+    background: #3b82f6;
+    top: -100px;
+    left: -100px;
 }
 
-
-/* ===========================
-      CARD
-=========================== */
-
-.container{
-
-width:560px;
-
-padding:45px;
-
-background:rgba(255,255,255,.08);
-
-backdrop-filter:blur(18px);
-
-border-radius:28px;
-
-border:1px solid rgba(255,255,255,.15);
-
-box-shadow:
-0 25px 60px rgba(0,0,0,.45);
-
-text-align:center;
-
-color:white;
-
-position:relative;
-
-z-index:10;
-
-animation:fadeUp .7s ease;
-
+body::after {
+    width: 450px;
+    height: 450px;
+    background: #6366f1;
+    bottom: -150px;
+    right: -100px;
 }
 
-@keyframes fadeUp{
-
-from{
-
-opacity:0;
-transform:translateY(40px);
-
+/* ==========================================================================
+   GLASS CONTAINER CARD
+   ========================================================================== */
+.container {
+    width: 100%;
+    max-width: 580px;
+    padding: 45px;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: #f8fafc;
+    position: relative;
+    z-index: 10;
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-to{
-
-opacity:1;
-transform:translateY(0);
-
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
+/* Dynamic container theme glow upgrades */
+.container.phishing-theme {
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 
+                0 0 40px rgba(239, 68, 68, 0.1);
 }
 
-
-/* ===========================
-      LOGO
-=========================== */
-
-.logo{
-
-width:90px;
-
-height:90px;
-
-margin:auto;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-border-radius:50%;
-
-background:linear-gradient(45deg,#2563eb,#06b6d4);
-
-font-size:45px;
-
-box-shadow:
-
-0 0 35px rgba(37,99,235,.55);
-
-margin-bottom:25px;
-
+.container.safe-theme {
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 
+                0 0 40px rgba(34, 197, 94, 0.1);
 }
 
-
-/* ===========================
-      TITLE
-=========================== */
-
-h1{
-
-font-size:36px;
-
-font-weight:700;
-
-margin-bottom:10px;
-
-background:linear-gradient(to right,#60a5fa,#22d3ee);
-
--webkit-background-clip:text;
-
--webkit-text-fill-color:transparent;
-
+/* ==========================================================================
+   HEADER & LOGOS
+   ========================================================================== */
+.logo, .status-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 38px;
 }
 
-p{
-
-color:#cbd5e1;
-
-margin-bottom:25px;
-
+.logo {
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
 }
 
-
-/* ===========================
-      INPUT
-=========================== */
-
-input{
-
-width:100%;
-
-padding:16px;
-
-border:none;
-
-border-radius:14px;
-
-background:rgba(255,255,255,.12);
-
-color:white;
-
-font-size:16px;
-
-transition:.3s;
-
-margin-top:10px;
-
+.status-icon {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-input::placeholder{
-
-color:#d1d5db;
-
+.phishing-theme .status-icon {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.2);
 }
 
-input:focus{
-
-outline:none;
-
-background:rgba(255,255,255,.18);
-
-box-shadow:
-
-0 0 0 3px rgba(37,99,235,.4);
-
+.safe-theme .status-icon {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    box-shadow: 0 0 25px rgba(34, 197, 94, 0.2);
 }
 
-
-/* ===========================
-      BUTTON
-=========================== */
-
-button{
-
-margin-top:25px;
-
-width:100%;
-
-padding:16px;
-
-border:none;
-
-border-radius:14px;
-
-background:linear-gradient(90deg,#2563eb,#06b6d4);
-
-color:white;
-
-font-size:17px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-transition:.3s;
-
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(to right, #93c5fd, #38bdf8, #a78bfa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
 }
 
-button:hover{
-
-transform:translateY(-3px);
-
-box-shadow:
-
-0 12px 25px rgba(37,99,235,.45);
-
+.subtitle {
+    color: #94a3b8;
+    margin-bottom: 35px;
+    font-size: 15px;
 }
 
-button:active{
-
-transform:scale(.98);
-
+.section-label {
+    color: #94a3b8;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 10px;
 }
 
-
-/* ===========================
-      RESULT
-=========================== */
-
-h2{
-
-font-size:30px;
-
-margin:20px 0;
-
+/* ==========================================================================
+   INPUTS & BUTTONS
+   ========================================================================== */
+.scan-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.safe{
-
-color:#22c55e;
-
+input {
+    width: 100%;
+    padding: 16px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.6);
+    color: #ffffff;
+    font-size: 15px;
+    transition: all 0.25s ease;
 }
 
-.phishing{
-
-color:#ef4444;
-
+input::placeholder {
+    color: #64748b;
 }
 
-
-/* ===========================
-      URL BOX
-=========================== */
-
-.url{
-
-background:rgba(255,255,255,.1);
-
-padding:15px;
-
-border-radius:12px;
-
-margin:20px 0;
-
-word-break:break-all;
-
-color:#f8fafc;
-
+input:focus {
+    outline: none;
+    background: rgba(15, 23, 42, 0.8);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
 }
 
-
-/* ===========================
-      CONFIDENCE
-=========================== */
-
-.confidence{
-
-font-size:20px;
-
-font-weight:bold;
-
-margin-top:20px;
-
-color:#38bdf8;
-
+/* Interactive Buttons */
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    text-decoration: none;
 }
 
-
-/* Progress Bar */
-
-.progress{
-
-width:100%;
-
-height:12px;
-
-margin:18px 0;
-
-background:rgba(255,255,255,.15);
-
-border-radius:30px;
-
-overflow:hidden;
-
+.btn-primary {
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    color: white;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
 }
 
-.progress-fill{
-
-height:100%;
-
-background:linear-gradient(90deg,#22c55e,#06b6d4);
-
-border-radius:30px;
-
-animation:load 1s;
-
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+    filter: brightness(1.1);
 }
 
-@keyframes load{
-
-from{
-
-width:0;
-
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f8fafc;
 }
 
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
 }
 
-
-/* ===========================
-      REASONS
-=========================== */
-
-.reasons{
-
-text-align:left;
-
-margin-top:25px;
-
+.btn:active {
+    transform: scale(0.98);
 }
 
-.reasons h3{
-
-margin-bottom:15px;
-
+/* ==========================================================================
+   RESULTS ELEMENTS
+   ========================================================================== */
+.result-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
 }
 
-.reasons ul{
-
-padding:0;
-
+.safe {
+    color: #4ade80;
+    text-shadow: 0 0 15px rgba(74, 222, 128, 0.35);
 }
 
-.reasons li{
-
-list-style:none;
-
-margin:10px 0;
-
-padding:14px;
-
-border-radius:12px;
-
-background:rgba(239,68,68,.15);
-
-border-left:5px solid #ef4444;
-
-color:#fecaca;
-
-animation:fadeReason .5s ease;
-
+.phishing {
+    color: #f87171;
+    text-shadow: 0 0 15px rgba(248, 113, 113, 0.35);
 }
 
-.safe-box li{
-
-background:rgba(34,197,94,.15);
-
-border-left:5px solid #22c55e;
-
-color:#bbf7d0;
-
+/* URL Display Box */
+.url {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin: 8px 0 25px;
+    word-break: break-all;
+    color: #e2e8f0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-@keyframes fadeReason{
-
-from{
-
-opacity:0;
-
-transform:translateX(-15px);
-
+/* Dynamic Progress Bar (Confidence) */
+.confidence-container {
+    margin: 25px 0;
+    text-align: left;
 }
 
-to{
-
-opacity:1;
-
-transform:translateX(0);
-
+.confidence-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 8px;
+    font-weight: 500;
 }
 
+.confidence-value {
+    color: #38bdf8;
+    font-weight: bold;
 }
 
-
-/* ===========================
-      LINK
-=========================== */
-
-a{
-
-text-decoration:none;
-
+.progress {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-
-/* ===========================
-      FOOTER
-=========================== */
-
-.footer{
-
-margin-top:30px;
-
-font-size:13px;
-
-color:#94a3b8;
-
+.progress-fill {
+    height: 100%;
+    width: var(--width, 0%); /* Uses the dynamic variable, defaulting to 0% */
+    border-radius: 30px;
+    animation: load 1s;
+}
+/* Assign color bars relative to class */
+.phishing-theme .progress-fill {
+    background: linear-gradient(90deg, #f87171, #ef4444);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
 }
 
-
-/* ===========================
-      RESPONSIVE
-=========================== */
-
-@media(max-width:600px){
-
-.container{
-
-width:92%;
-
-padding:30px;
-
+.safe-theme .progress-fill {
+    background: linear-gradient(90deg, #4ade80, #22c55e);
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
 }
 
-h1{
-
-font-size:28px;
-
+/* ==========================================================================
+   REASONS / EXPLANATIONS LIST
+   ========================================================================== */
+.reasons {
+    text-align: left;
+    margin: 30px 0;
 }
 
-h2{
-
-font-size:24px;
-
+.reasons h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #cbd5e1;
+    font-weight: 600;
+    letter-spacing: 0.3px;
 }
 
-button{
-
-font-size:16px;
-
+.reasons ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
+.reasons li {
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: slideIn 0.4s ease forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Red Threat Reasons */
+.threat-box li {
+    background: rgba(239, 68, 68, 0.08);
+    border-left: 4px solid #ef4444;
+    color: #fecaca;
+}
+
+.threat-box li::before {
+    content: "✖";
+    color: #ef4444;
+    font-weight: bold;
+}
+
+/* Green Safe Reasons */
+.safe-box li {
+    background: rgba(34, 197, 94, 0.08);
+    border-left: 4px solid #22c55e;
+    color: #bbf7d0;
+}
+
+.safe-box li::before {
+    content: "✔";
+    color: #22c55e;
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   FOOTER & UTILS
+   ========================================================================== */
+.action-area {
+    margin-top: 30px;
+}
+
+.footer {
+    margin-top: 35px;
+    font-size: 12px;
+    color: #64748b;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 20px;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media(max-width: 600px) {
+    .container {
+        padding: 30px 20px;
+    }
+    
+    h1 {
+        font-size: 26px;
+    }
+    
+    .result-title {
+        font-size: 22px;
+    }
+    
+    input, .btn {
+        padding: 14px;
+        font-size: 15px;
+    }
 }

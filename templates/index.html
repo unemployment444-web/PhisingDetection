@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phishing Website Detector</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
-
 <body>
 
 <div class="container">
-
     <div class="logo">🛡️</div>
-
     <h1>Phishing Website Detector</h1>
+    <p class="subtitle">Machine Learning Based URL Security Analysis</p>
 
-    <p>Machine Learning Based URL Security Analysis</p>
-
-    <form action="/predict" method="POST">
-        <input type="text" name="url" placeholder="Enter website URL..." required>
-
-        <button type="submit">Check Website</button>
+    <form action="/predict" method="POST" class="scan-form">
+        <div class="input-group">
+            <input type="text" name="url" placeholder="Enter website URL to analyze..." required>
+        </div>
+        <button type="submit" class="btn btn-primary">Analyze URL</button>
     </form>
-
+    
+    <div class="footer">
+        Powered by Advanced Threat Intelligence ML Models
+    </div>
 </div>
 
 </body>

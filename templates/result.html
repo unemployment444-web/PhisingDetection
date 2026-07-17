@@ -1,64 +1,57 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-<title>Result</title>
-<link rel="stylesheet" href="/static/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Result</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
-
-
 <body>
 
-<div class="container">
+<!-- Apply threat-based class dynamically to change glow accents -->
+<div class="container {% if prediction == 'Phishing Website' %}phishing-theme{% else %}safe-theme{% endif %}">
+    
+    <!-- Dynamic Icon -->
+    <div class="status-icon">
+        {% if prediction == 'Phishing Website' %}⚠️{% else %}✅{% endif %}
+    </div>
 
-<h1>Detection Result</h1>
+    <h1>Analysis Result</h1>
 
-<h2 class="
-{% if prediction == 'Phishing Website' %}
-phishing
-{% else %}
-safe
-{% endif %}
-">
-{{ prediction }}
-</h2>
+    <h2 class="result-title {% if prediction == 'Phishing Website' %}phishing{% else %}safe{% endif %}">
+        {{ prediction }}
+    </h2>
 
-<p>
-<b>Website:</b>
-</p>
+    <p class="section-label">Analyzed URL</p>
+    <div class="url">
+        {{ url }}
+    </div>
 
-<div class="url">
-{{url}}
+    <!-- Interactive Progress Bar (Confidence) -->
+    <div class="confidence-container">
+        <div class="confidence-label">
+            <span>Scan Confidence</span>
+            <span class="confidence-value">{{ confidence }}%</span>
+        </div>
+        <div class="progress">
+            <div class="progress-fill" style="--width: {{ confidence }}%;"></div>
+        </div>
+    </div>
+
+    <!-- Dynamic Reasons Box -->
+    <div class="reasons {% if prediction == 'Phishing Website' %}threat-box{% else %}safe-box{% endif %}">
+        <h3>Analysis Insights</h3>
+        <ul>
+            {% for reason in reasons %}
+            <li>{{ reason }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="action-area">
+        <a href="/" class="btn btn-secondary">Scan Another URL</a>
+    </div>
 </div>
-
-
-<div class="confidence">
-Confidence: {{confidence}}%
-</div>
-
-
-<div class="reasons">
-<h3>Detection Reasons</h3>
-
-<ul>
-{% for reason in reasons %}
-<li>{{reason}}</li>
-{% endfor %}
-</ul>
-</div>
-
-
-<a href="/">
-<button>
-Scan Another
-</button>
-</a>
-
-
-</div>
-
 
 </body>
-
 </html>
